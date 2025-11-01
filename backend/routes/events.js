@@ -1,5 +1,6 @@
 const express = require("express");
 const Event = require("../models/Event");
+const Registration = require("../models/Registration");
 const { authMiddleware, adminMiddleware } = require("../middleware/auth");
 
 const router = express.Router();
@@ -33,15 +34,27 @@ router.get("/", async (req, res) => {
 
 
 // Get single event by ID
-router.get("/:id", async (req, res) => {
+// Make sure this route is protected by your auth middleware
+router.get("/:id", authMiddleware, async (req, res) => {
   try {
     const event = await Event.findById(req.params.id);
     if (!event) return res.status(404).json({ message: "Event not found" });
-    res.json(event);
+
+    // ✅ Check if user is already registered
+    const isRegistered = await Registration.findOne({
+      userId: req.user.id,
+      eventId: req.params.id
+    });
+
+    res.json({
+      ...event.toObject(),
+      isRegistered: !!isRegistered // Converts to true/false
+    });
   } catch (err) {
     res.status(500).json({ message: "Error fetching event", error: err.message });
   }
 });
+
 
 
 // Create event (admin only)

@@ -75,7 +75,7 @@ function Userdashboard() {
       <div className="flex-1 p-6 space-y-8 bg-gray-50 min-h-screen">
         {/* Header */}
         <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-bold">Hello, {userName} 👋</h1>
+          <h1 className="text-2xl font-bold">Hello, {userName} !</h1>
           <button className="p-2 rounded-full hover:bg-gray-100">
             <Settings className="w-6 h-6 text-gray-600" />
           </button>

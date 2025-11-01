@@ -16,7 +16,7 @@ function UserHeaderBar() {
   };
 
   return (
-    <header className="fixed w-full bg-gradient-to-r from-sky-600 to-sky-900 text-white shadow-md px-8 py-5 flex items-center justify-between h-20">
+    <header className="fixed w-full bg-gradient-to-r from-cyan-600 to-cyan-900 text-white shadow-md px-8 py-5 flex items-center justify-between h-20">
       {/* Logo / Brand */}
       <h1 className="text-3xl font-bold tracking-wide">Eventify</h1>
 

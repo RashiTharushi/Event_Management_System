@@ -14,6 +14,7 @@ interface Event {
   registrantsCount: number;
   imageUrl?: string;
   avgRating?: number;
+  isRegistered?: boolean;
 }
 
 const EventDetails: React.FC = () => {
@@ -24,27 +25,34 @@ const EventDetails: React.FC = () => {
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-      const res = await API.get(`/events/${eventId}`);
-      setEvent(res.data);
+        const res = await API.get(`/events/${eventId}`);
+        setEvent(res.data);
 
-      // ✅ Set status based on backend
-      if (res.data.isRegistered) {
-        setStatus("Registered");
-      } else if (res.data.registrantsCount >= res.data.capacity) {
-        setStatus("Full");
-      } else {
-        setStatus("Open");
+        // Set status
+        if (res.data.isRegistered) {
+          setStatus("Registered");
+        } else if (res.data.registrantsCount >= res.data.capacity) {
+          setStatus("Full");
+        } else {
+          setStatus("Open");
+        }
+      } catch (err) {
+        console.error("Error fetching event:", err);
       }
-    } catch (err) {
-      console.error("Error fetching event:", err);
-    }
     };
+
     fetchEvent();
   }, [eventId]);
 
   const handleRegister = async (eventId: string) => {
     try {
-      await API.post(`/registration/${eventId}`);
+      // Include token if auth is needed
+      const token = localStorage.getItem("token");
+      await API.post(
+        `/registration/${eventId}`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
       setStatus("Registered");
       alert("Successfully registered!");
     } catch (err: any) {
@@ -62,8 +70,13 @@ const EventDetails: React.FC = () => {
 
   return (
     <div>
-      <UserHeaderBar/>
-      <div className="min-h-screen bg-gray-50 pb-12">
+      {/* Fixed header */}
+      <div className="fixed top-0 left-0 w-full z-50">
+        <UserHeaderBar />
+      </div>
+
+      {/* Page content with padding-top to avoid header overlap */}
+      <div className="min-h-screen bg-gray-50 px-20 rounded-10xl pt-20 pb-12">
         {/* Banner */}
         <div className="relative w-full h-50">
           <img
@@ -74,14 +87,14 @@ const EventDetails: React.FC = () => {
             alt={event.title}
             className="w-full h-full object-cover rounded-b-3xl"
           />
-          <div className="  absolute inset-0 bg-cyan-200 bg-opacity-50 flex items-center justify-center">
+          <div className="absolute inset-0 bg-cyan-500 bg-opacity-50 flex items-center justify-center">
             <h1 className="text-4xl md:text-5xl font-bold text-white drop-shadow-lg text-center">
               {event.title}
             </h1>
           </div>
         </div>
 
-        {/* Content */}
+        {/* Event details */}
         <div className="max-w-3xl mx-auto px-6 mt-10 bg-white shadow-lg rounded-2xl p-8 space-y-6">
           {/* Date */}
           <div className="flex items-center gap-3 text-gray-700">

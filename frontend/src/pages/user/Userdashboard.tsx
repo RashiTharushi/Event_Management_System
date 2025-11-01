@@ -120,9 +120,9 @@ function Userdashboard() {
                   </div>
                   <Link
                     to={`/events/${event._id}`}
-                    className="px-3 py-1 text-sm bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+                    className="px-3 py-1 text-sm bg-cyan-600 text-white rounded-lg hover:bg-cyan-700"
                   >
-                    View
+                    View Details
                   </Link>
                 </div>
               ))}
@@ -148,9 +148,13 @@ function Userdashboard() {
                       {new Date(event.date).toLocaleDateString()} • {event.location}
                     </p>
                   </div>
-                  <button className="px-3 py-1 text-sm bg-gray-500 text-white rounded-lg hover:bg-gray-600">
+                  <Link
+                    to={`/feedback/${event._id}`}
+                    className="px-3 py-1 text-sm bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 rounded-lg"
+                  >
                     View Feedback
-                  </button>
+                  </Link>
+
                 </div>
               ))}
             </div>
@@ -162,7 +166,7 @@ function Userdashboard() {
           <div className="text-center">
             <Link
               to="/browse-events"
-              className="px-6 py-3 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700"
+              className="px-6 py-3 bg-cyan-700 text-white rounded-lg font-semibold hover:bg-cyan-800"
             >
               Browse Events
             </Link>

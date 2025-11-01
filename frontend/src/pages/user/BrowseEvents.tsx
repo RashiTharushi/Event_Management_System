@@ -66,9 +66,11 @@ function BrowseEvents() {
 
   return (
     <div>
-        <UserHeaderBar/>
-        <div className="p-6 space-y-6">
-      <h1 className="text-2xl font-bold text-gray-800">Browse Events</h1>
+        <div className="fixed top-0 left-0 w-full z-50">
+          <UserHeaderBar />
+        </div>
+        <div className=" mx-auto p-6 pt-25">
+        <h1 className="text-2xl font-bold mb-6">Browse Events</h1>
 
       {/* Filters */}
       <div className="flex flex-wrap gap-4 bg-white p-4 rounded-lg shadow">
@@ -136,14 +138,14 @@ function BrowseEvents() {
                 {status === "Open" ? (
                   <button
                     onClick={() => handleRegister(event._id)}
-                    className="flex-1 bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition"
+                    className="flex-1 bg-cyan-600 text-white py-2 rounded-lg hover:bg-cyan-700 transition"
                   >
                     Register
                   </button>
                 ) : status === "Registered" ? (
                   <button
                     disabled
-                    className="flex-1 bg-blue-200 text-blue-700 py-2 rounded-lg cursor-not-allowed"
+                    className="flex-1 bg-blue-300 text-blue-700 py-2 rounded-lg cursor-not-allowed"
                   >
                     Registered
                   </button>
@@ -157,7 +159,7 @@ function BrowseEvents() {
                 )}
                 <Link
                   to={`/events/${event._id}`}
-                  className="flex-1 bg-gray-100 text-gray-700 py-2 rounded-lg hover:bg-gray-200 transition text-center"
+                  className="flex-1 bg-cyan-400 text-gray-700 py-2 rounded-lg hover:bg-cyan-500 transition text-center"
                 >
                   View Details
                 </Link>

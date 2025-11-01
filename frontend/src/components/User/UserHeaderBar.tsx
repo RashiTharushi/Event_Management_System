@@ -24,28 +24,28 @@ function UserHeaderBar() {
       <nav className="flex items-center gap-4">
         <Link
           to="/user-dashboard"
-          className="flex items-center gap-2 px-4 py-2 rounded-md hover:bg-sky-400 transition font-medium"
+          className="flex items-center gap-2 px-4 py-2 rounded-md hover:bg-cyan-600 transition font-medium"
         >
           <LayoutDashboard className="w-5 h-5" />
           <span>Dashboard</span>
         </Link>
         <Link
           to="/browse-events"
-          className="flex items-center gap-2 px-4 py-2 rounded-md hover:bg-sky-400 transition font-medium"
+          className="flex items-center gap-2 px-4 py-2 rounded-md hover:bg-cyan-600 transition font-medium"
         >
           <CalendarSearch className="w-5 h-5" />
           <span>Browse Events</span>
         </Link>
         <Link
           to="/my-events"
-          className="flex items-center gap-2 px-4 py-2 rounded-md hover:bg-sky-400 transition font-medium"
+          className="flex items-center gap-2 px-4 py-2 rounded-md hover:bg-cyan-600 transition font-medium"
         >
           <CalendarCheck2 className="w-5 h-5" />
           <span>My Events</span>
         </Link>
         <Link
           to="/profile"
-          className="flex items-center gap-2 px-4 py-2 rounded-md hover:bg-sky-400 transition font-medium"
+          className="flex items-center gap-2 px-4 py-2 rounded-md hover:bg-cyan-600 transition font-medium"
         >
           <User className="w-5 h-5" />
           <span>Profile</span>

@@ -60,7 +60,7 @@ function RegisteredUsers() {
       <AdminSidebar />
 
       {/* Main Content */}
-      <div className="flex-1 p-8">
+      <div className="flex-1 p-8 ml-64">
         <h1 className="text-2xl font-bold mb-6">Registered Users</h1>
 
         {/* Event Info */}
@@ -78,8 +78,8 @@ function RegisteredUsers() {
 
         {/* Users Table */}
         <div className="overflow-x-auto bg-white shadow rounded-lg">
-          <table className="w-full border-collapse">
-            <thead className="bg-blue-200">
+          <table className="w-full border-b-teal-600 border-2">
+            <thead className="bg-cyan-300">
               <tr>
                 <th className="p-3 border text-left">#</th>
                 <th className="p-3 border text-left">Username</th>

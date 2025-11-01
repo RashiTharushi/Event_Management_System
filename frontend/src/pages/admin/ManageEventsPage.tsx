@@ -93,22 +93,22 @@ function ManageEventsPage() {
       <AdminSidebar />
 
       {/* Main Content */}
-      <div className="flex-1 p-8">
+      <div className="flex-1 p-8 ml-64">
         {/* Header */}
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-bold">Manage Events</h1>
           <button
             onClick={() => setShowAddModal(true)}
-            className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700"
+            className="flex items-center gap-2 bg-cyan-600 text-white px-4 py-2 rounded-lg shadow hover:bg-cyan-700"
           >
             <Plus size={18} /> Add Event
           </button>
         </div>
 
         {/* Events Table */}
-        <div className="overflow-x-auto bg-white shadow rounded-xl">
-          <table className="w-full border-collapse">
-            <thead className="bg-blue-200">
+        <div className="overflow-x-auto pt-5 bg-white shadow">
+          <table className="w-full border-2 border-b-teal-600">
+            <thead className="bg-cyan-300">
               <tr>
                 <th className="p-3 border text-left">#</th>
                 <th className="p-3 border text-left">Title</th>

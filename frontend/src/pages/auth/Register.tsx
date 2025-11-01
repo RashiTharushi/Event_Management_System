@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../../services/api";
+import bgImage from "../../assets/default-img.jpg"
 
 interface RegisterForm {
   name: string;
@@ -52,8 +53,17 @@ export default function Register() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded-2xl shadow-lg w-96">
+    <div className="relative flex flex-col items-center justify-center min-h-screen ">
+      <div
+        className="absolute inset-0 bg-cover bg-center"
+        style={{ backgroundImage: `url(${bgImage})` }}
+      ></div>
+
+      {/* Dark Overlay */}
+      <div className="absolute inset-0 bg-black opacity-70"></div>
+
+      <h1 className="relative z-10 text-5xl font-bold text-white mb-8">Eventify</h1>
+      <div className="relative z-10 bg-white p-8 rounded-2xl shadow-lg w-96">
         <h2 className="text-2xl font-bold text-center mb-6">Register</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <input

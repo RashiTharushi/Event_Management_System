@@ -2,6 +2,7 @@ const express = require("express");
 const User = require("../models/User");
 const Event = require("../models/Event");
 const Registration = require("../models/Registration");
+const Feedback = require("../models/Feedback");
 const { authMiddleware, adminMiddleware } = require("../middleware/auth");
 
 const router = express.Router();
@@ -80,5 +81,17 @@ router.get("/events", authMiddleware, adminMiddleware, async (req, res) => {
   }
 });
 
+router.get("/feedbacks", async (req, res) => {
+  try {
+    const feedbacks = await Feedback.find()
+      .populate("userId", "username email")
+      .populate("eventId", "title")
+      .sort({ createdAt: -1 });
+
+    res.json(feedbacks);
+  } catch (err) {
+    res.status(500).json({ message: "Error fetching feedbacks", error: err.message });
+  }
+});
 
 module.exports = router;

@@ -1,10 +1,7 @@
-// src/pages/AdminDashboard.js
 import { useEffect, useState } from "react";
 import API from "../../services/api";
 import AdminSidebar from "../../components/Admin/AdminSidebar";
-import { Calendar, Clock, User } from "lucide-react";
-import FeedbackTable from "../../components/Admin/FeedbackTable";
-import ExportReports from "../../components/Admin/ExportReports";
+import { Calendar, Clock, User, Star } from "lucide-react";
 
 export default function AdminDashboard() {
   interface Event {
@@ -23,40 +20,49 @@ export default function AdminDashboard() {
     registeredAt: string;
   }
 
+  interface Feedback {
+    _id: string;
+    userId: { username: string; email: string };
+    eventId: { title: string };
+    rating: number;
+    comment: string;
+    createdAt: string;
+  }
+
   const [stats, setStats] = useState({ users: 0, events: 0, registrations: 0 });
   const [upcomingEvents, setUpcomingEvents] = useState<Event[]>([]);
   const [recentRegistrations, setRecentRegistrations] = useState<RecentRegistration[]>([]);
+  const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
 
   useEffect(() => {
-    const fetchStats = async () => {
+    const fetchData = async () => {
       try {
-        const res = await API.get("/admindashboard/stats");
+        // Fetch admin stats and events
+        const statsRes = await API.get("/admindashboard/stats");
         setStats({
-          users: res.data.users,
-          events: res.data.events,
-          registrations: res.data.registrations,
+          users: statsRes.data.users,
+          events: statsRes.data.events,
+          registrations: statsRes.data.registrations,
         });
-        setUpcomingEvents(res.data.upcomingEvents || []);
+        setUpcomingEvents(statsRes.data.upcomingEvents || []);
+
+        // Fetch recent registrations
+        const regRes = await API.get("/admindashboard/recent-registrations");
+        setRecentRegistrations(regRes.data);
+
+        // Fetch feedbacks
+        const feedbackRes = await API.get("/admindashboard/feedbacks");
+        setFeedbacks(feedbackRes.data);
       } catch (err) {
-        console.error("Error fetching stats", err);
+        console.error("Error fetching admin dashboard data:", err);
       }
     };
 
-    const fetchRecentRegistrations = async () => {
-      try {
-        const res = await API.get("/admindashboard/recent-registrations");
-        setRecentRegistrations(res.data);
-      } catch (err) {
-        console.error("Error fetching recent registrations", err);
-      }
-    };
-
-    fetchStats();
-    fetchRecentRegistrations();
+    fetchData();
   }, []);
 
   return (
-    <div className="flex min-h-screen ">
+    <div className="flex min-h-screen">
       {/* Sidebar */}
       <AdminSidebar />
 
@@ -82,7 +88,7 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        {/* Recent Registrations / Activity Feed */}
+        {/* Recent Registrations */}
         <div className="bg-white p-6 rounded-xl shadow">
           <h2 className="text-xl font-semibold mb-4">Recent Registrations</h2>
           {recentRegistrations.length === 0 ? (
@@ -135,9 +141,40 @@ export default function AdminDashboard() {
             <p className="text-gray-500">No upcoming events</p>
           )}
         </div>
-        <div className="p-6 space-y-6">
-          <FeedbackTable />
-          <ExportReports />
+
+        {/* Feedback Section */}
+        <div className="bg-white p-6 rounded-xl shadow">
+          <h2 className="text-xl font-semibold mb-4">Recent Feedbacks</h2>
+          {feedbacks.length === 0 ? (
+            <p className="text-gray-500">No feedbacks yet.</p>
+          ) : (
+            <div className="max-h-96 overflow-y-auto space-y-4">
+              {feedbacks.map((fb) => (
+                <div
+                  key={fb._id}
+                  className="border-b pb-3 flex flex-col md:flex-row md:justify-between"
+                >
+                  <div>
+                    <p className="font-semibold">{fb.userId?.username || "Unknown User"}</p>
+                    <p className="text-sm text-gray-400">
+                      Event: {fb.eventId?.title || "N/A"}
+                    </p>
+                    <p className="text-gray-700 mt-1">{fb.comment}</p>
+                  </div>
+                  <div className="text-right mt-2 md:mt-0">
+                    <div className="flex justify-end text-yellow-500">
+                      {Array.from({ length: fb.rating }, (_, i) => (
+                        <Star key={i} size={16} fill="gold" stroke="gold" />
+                      ))}
+                    </div>
+                    <p className="text-xs text-gray-400">
+                      {new Date(fb.createdAt).toLocaleDateString()}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>

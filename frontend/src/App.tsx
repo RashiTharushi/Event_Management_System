@@ -10,6 +10,7 @@ import BrowseEvents from "./pages/user/BrowseEvents";
 import Profile from "./pages/user/Profile";
 import FeedbackPage from "./pages/user/FeedbackPage";
 import EventDetails from "./pages/user/EventDetails";
+import AddEventPage from "./components/Admin/AddEventPage";
 
 function App() {
   return (
@@ -26,7 +27,8 @@ function App() {
         <Route path="/manage-events" element={<ManageEventPage/>} />
         <Route path="/admin/events/:eventId/users" element={<RegisteredUsers />} />
         <Route path="/feedback/:eventId" element={<FeedbackPage />} />
-        
+        <Route path="/add-user-event" element={<AddEventPage />} />
+
       </Routes>
     </Router>
   );

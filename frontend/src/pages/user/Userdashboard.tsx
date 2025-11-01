@@ -68,11 +68,12 @@ function Userdashboard() {
 
   return (
     <div >
-      {/* Sidebar */}
-      <UserHeaderBar />
+      <div className="fixed top-0 left-0 w-full z-50">
+          <UserHeaderBar />
+      </div>
 
       {/* Main Content */}
-      <div className="flex-1 p-6 space-y-8 bg-gray-50 min-h-screen">
+      <div className=" mx-auto p-6 pt-25">
         {/* Header */}
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-bold">Hello, {userName} !</h1>
@@ -163,7 +164,7 @@ function Userdashboard() {
 
         </section>
         {/* CTA */}
-          <div className="text-center">
+          <div className="text-center pt-6">
             <Link
               to="/browse-events"
               className="px-6 py-3 bg-cyan-700 text-white rounded-lg font-semibold hover:bg-cyan-800"
